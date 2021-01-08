@@ -18,7 +18,7 @@ class Pesquisa:
                     self.nome = ''
                     self.tamanho = ''
                     self.caminho = ''
-                    break
+                    
         else:
             while self.encontrado == 0:
                 for self.diretorios, self.pastas, self.Arquivos in os.walk(r'C:\\'):
@@ -34,11 +34,11 @@ class Pesquisa:
                     self.nome = ''
                     self.tamanho = ''
                     self.caminho = ''
-                    break
+                    
         return [self.nome, self.tamanho, self.caminho]
 
 
 if __name__ == '__main__':
     dado = Pesquisa()
 
-    print(dado.pesquisar('arquivos.py'))
+    print(dado.pesquisar('Downloads', 'Pasta'))
