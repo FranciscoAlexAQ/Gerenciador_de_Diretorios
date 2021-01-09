@@ -1,5 +1,6 @@
 from tkinter import * 
 from Pesquisa import Pesquisa
+from tkinter import messagebox
 
 import time
 
@@ -68,25 +69,15 @@ class Main:
 
         self.dados = Pesquisa.pesquisar(self, self.entryNomeArquivo.get(), self.escolha.get())
 
-        if self.dados[0] == 'NADA ENCONTRADO':
-            self.entryNome.insert(END, self.dados[0])
-            self.entryTamanho.insert(END, self.dados[1])
-            self.entryCaminho.insert(END, self.dados[2])
+        print(self.dados)
 
+        if not self.dados:
+            messagebox.showinfo('Nada Encontrado', 'Nenhum dado foi encontrado')
             self.entryNomeArquivo.delete(0, END)
-
-            self.root.update_idletasks()
-            time.sleep(2)
-
-            self.entryNome.delete(0, END)
-            self.entryTamanho.delete(0, END)
-            self.entryCaminho.delete(0, END)
         else:
-            self.entryNomeArquivo.delete(0, END)
-
-            self.entryNome.insert(END, self.dados[0])
-            self.entryTamanho.insert(END, self.dados[1])
-            self.entryCaminho.insert(END, self.dados[2])
-
-
+            for dado in self.dados:
+                self.entryNome.insert(END, dado[0])
+                self.entryTamanho.insert(END, dado[1])
+                self.entryCaminho.insert(END, dado[2])
+       
 Main()
