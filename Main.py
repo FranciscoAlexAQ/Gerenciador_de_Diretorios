@@ -1,7 +1,6 @@
 from tkinter import * 
 from Pesquisa import Pesquisa
 from tkinter import messagebox
-
 import time
 
 
@@ -53,6 +52,9 @@ class Main:
             font=('Times BOLD', 10), bg='#2F4F4F', fg='#fff')
         self.mensagem.place(relx=0.2, rely=0.9)
 
+        self.loading = Label(self.root, text='', font=('Times BOLD', 10), bg='#2F4F4F', fg='#fff')
+        self.loading.place(relx=0.4, rely=0.5)
+        
     def crarOptionMenu(self):
         self.escolha = StringVar()
         self.lista = ['Pasta', 'Arquivo']
@@ -67,17 +69,23 @@ class Main:
         self.entryTamanho.delete(0, END)
         self.entryCaminho.delete(0, END)
 
-        self.dados = Pesquisa.pesquisar(self, self.entryNomeArquivo.get(), self.escolha.get())
-
-        print(self.dados)
+        while True:
+            self.loading['text'] = 'pesquisando...'
+            self.root.update_idletasks()
+            time.sleep(1)
+            self.dados = Pesquisa.pesquisar(self, self.entryNomeArquivo.get(), self.escolha.get())
+            self.loading['text'] = ''
+            break
 
         if not self.dados:
             messagebox.showinfo('Nada Encontrado', 'Nenhum dado foi encontrado')
             self.entryNomeArquivo.delete(0, END)
         else:
             for dado in self.dados:
+                self.entryNomeArquivo.delete(0, END)
                 self.entryNome.insert(END, dado[0])
                 self.entryTamanho.insert(END, dado[1])
                 self.entryCaminho.insert(END, dado[2])
-       
+
+
 Main()
